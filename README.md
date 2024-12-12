@@ -26,6 +26,11 @@ the user is familiar with. This is why showing the user the UI as early in devel
 
 # C#
 
+There are several things that are important to me as a developer when building anything with C#. First proper application of the "SOLID", "DRY", "OOP", and "clean code" principals.
+Second, following the standard coding conventions document that most companies have. Visual Studio makes most of this easy and has a lot of it already built in. However, some
+developers seem to always fight the IDE's suggestions and want to do it their way. This is almost never good. There are several good examples out on the web that new developers
+should take a look at ([Example Coding Standards Doc](https://www.bing.com/ck/a?!&&p=8dc1353254b73e4bd13ddc75ec7fe7d1934baafae699e9a1a519b70c645e9ba9JmltdHM9MTczMzk2MTYwMA&ptn=3&ver=2&hsh=4&fclid=0cdd8e75-1f03-6755-337e-9a171e2f6605&psq=Example+C%23+coding+standards+document&u=a1aHR0cHM6Ly9hc3BibG9ncy5ibG9iLmNvcmUud2luZG93cy5uZXQvbWVkaWEvbGh1bnQvUHVibGljYXRpb25zL0NTaGFycCUyMENvZGluZyUyMFN0YW5kYXJkcy5wZGY&ntb=1)).
+
 # ASP.NET
 
 # Blazor
