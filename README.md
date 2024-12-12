@@ -1,4 +1,4 @@
-# Portfolio Development Examples
+# Application Development Examples
 This repository provides example portfolio example development in C#, Blazor, etc.
 
 ![Example Application process](https://github.com/makalkas/Portfolio_Development_Examples/blob/main/Images/2024-12-11%2018_42_56-Application%20Processes.vsdx%20-%20Visio%20Professional.png)
