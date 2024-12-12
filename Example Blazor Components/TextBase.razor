@@ -1,0 +1,29 @@
+﻿<style>
+    .labeltitle {
+        width: 50px;
+        text-align: right;
+    }
+    .control {
+        margin:5px;
+    }
+</style>
+<span class="control">
+    <label class="labeltitle">@Title</label>
+    <InputText @bind-Value="Text" placeholder="@PlaceholderText"></InputText>
+</span>
+
+@code {
+    [Parameter]
+    public string Title { get; set; } = "Input01";
+    [Parameter]
+    public string Text { get; set; } = string.Empty;
+    [Parameter]
+    public string PlaceholderText { get; set; } = string.Empty;
+    [Parameter] 
+    public EventCallback<string> TextChanged { get; set; }
+
+    private void HandleTextChanged()
+    {
+        TextChanged.InvokeAsync(this.Text);
+    }
+}

@@ -1,0 +1,158 @@
+﻿@using AmetekLabelPrinterApplication.Resources.Data.Exceptions
+@using AmetekLabelPrinterApplication.Resources.Data.Views
+@using AmetekLabelPrinterApplication.Resources.Services
+@using System.Security.Claims
+@using AmetekLabelPrinterApplication.Resources.StateComponents
+<div class="printerblock ">
+    <form>
+        <div class="select">
+        @if(PrinterNames != null)
+        {
+            <InputSelect class="PrntrNms" TValue="string" @onchange=HandleChange @bind-Value=Value title="Select Printer" >
+                <option value="-1" hidden>Select Printer</option>
+                @foreach(string item in PrinterNames)
+                {
+                    <option value="@item">@item</option>
+                }
+            </InputSelect>
+        }
+        else
+        {
+                <span>Loading...</span>
+        }
+        </div>
+        <br/>
+        
+        <label class="form-label">Number of Copies</label>
+        <NumberInput TValue="int" @bind-Value="@numberOfCopies" AllowNegativeNumbers="false" Placeholder="Select Number of Copies" Style="width:75px" />
+        <p class="btn-area"><Button Color="ButtonColor.Primary" Outline="false" @onclick=PrintLabel> Print Labels</Button> </p>
+        <p class="btn-area"><Button Color="ButtonColor.Primary" Outline="false" @onclick=PrintShippingLabel> Print Shipping</Button></p>
+    </form>
+</div>
+@code {
+
+    private int numberOfCopies = 1;    
+
+    [Inject]
+    public ILabelOrchistrator? LabelOrchistrator { get; set; }
+    [Inject]
+    IUserService? UserService{ get; set; }
+    [Inject]
+    IExceptionService? ExceptionService{ get; set; }
+    [Inject]
+    PrinterSelectionStateComponent? SelectionState {get;set;}
+
+    [Parameter]
+    public IEnumerable<string>? PrinterNames { get; set; }
+    [Parameter]
+    public string defaultSelectedValueID { get; set; } ="-1";
+    [Parameter]
+    public string? Value { get; set; } = "-1";
+    [Parameter]
+    public int NumberOfCopies { get; set; } = 1;
+
+    protected override void OnParametersSet()
+    {
+        SelectionState!.PrinterName = Value!;
+        if (numberOfCopies != -1)
+        {
+            SelectionState!.NumberOfCopies = numberOfCopies;
+        }
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        await GetPrinterNamesAsync();
+    }
+
+    public void RefreshMe()
+    {
+        
+        StateHasChanged();
+    }
+
+    private void HandleChange(ChangeEventArgs args)
+    {
+        Value = args.Value!.ToString();
+        SelectionState!.PrinterName = Value!;
+    }
+
+    // private void HandleCopiesChange()
+    // {
+        
+    //     if(numberOfCopies != -1)
+    //     {
+    //         SelectionState!.NumberOfCopies = numberOfCopies;
+    //     }
+        
+    // }
+
+    private void PrintLabel()
+    {
+        //ToDo: place code here to print ViPAK Labels to thermal printer
+        SelectionState!.PrinterName = Value!;
+        SelectionState.NumberOfCopies = numberOfCopies;
+        SelectionState.SetLabelType(0);
+    }
+
+    private void PrintShippingLabel()
+    {
+        //ToDo: place code here to print Shipping Labels to thermal printer
+        SelectionState!.PrinterName = Value!;
+        SelectionState.NumberOfCopies = numberOfCopies;
+        SelectionState.SetLabelType(1);
+    }
+
+    private async ValueTask<bool> GetPrinterNamesAsync()
+    {
+        PrinterNamesView printers = await LabelOrchistrator!.GetPrinterListAsync();
+        if (printers == null) printers = new PrinterNamesView();
+
+        if (printers != null && printers.Any())
+        {
+            List<string> names = new();
+            foreach (string printerName in printers)
+            {
+                names.Add(printerName);
+            }
+            PrinterNames = names;
+        }
+        SetDefaultPrinter();
+
+        return true;
+    }
+
+    private void SetDefaultPrinter()
+    {
+        if (UserService != null && LabelOrchistrator != null)
+        {
+            string currentUser = string.Empty;
+            if ( !string.IsNullOrEmpty(UserService.CurrentUser)  && UserService.IsLoggedIn == true)
+            {
+                currentUser = UserService.CurrentUser;
+                this.Value = LabelOrchistrator.DefaultPrinter(currentUser);
+                SelectionState!.PrinterName = Value!;
+                SelectionState!.NumberOfCopies = numberOfCopies;
+            }
+            else
+            {
+                UserServiceException userServiceException = new UserServiceException();
+                PrinterBaseException parent = new PrinterBaseException(userServiceException);
+
+                ExceptionService!.AddException(parent);
+            }
+        }
+        else
+        {
+            if (UserService != null)
+            {
+                LabelOrchistratorException labelOrchistratorException = new LabelOrchistratorException();
+                PrinterBaseException parent = new PrinterBaseException(labelOrchistratorException);
+
+                ExceptionService!.AddException(parent);
+            }
+        }
+    }
+
+   
+}

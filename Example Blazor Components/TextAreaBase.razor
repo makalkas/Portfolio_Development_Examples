@@ -1,0 +1,32 @@
+﻿<style>
+    .textarealabel {
+        vertical-align: top;
+        min-width: 50px;
+        text-align: right;        
+    }
+
+    .tadescription {
+        width: 300px;
+        height: 100px;
+        margin:5px;
+    }
+</style>
+<label class="textarealabel">@Title</label>
+<InputTextArea @bind-Value="Text" @oninput="HandleTextChanged" class="tadescription" placeholder="@PlaceholderText"></InputTextArea>
+@code {
+    [Parameter]
+    public string Title { get; set; } = string.Empty;
+    [Parameter]
+    public string Text { get; set; } = string.Empty;
+    [Parameter]
+    public string PlaceholderText { get; set; } = string.Empty;
+    [Parameter]
+    public EventCallback<string> TextChanged { get; set; }
+
+    private void HandleTextChanged(ChangeEventArgs args)
+    {
+        this.Text = args.Value!.ToString() ?? string.Empty;
+        TextChanged.InvokeAsync(this.Text);
+        this.StateHasChanged();
+    }
+}
