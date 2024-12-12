@@ -29,3 +29,9 @@ the user is familiar with. This is why showing the user the UI as early in devel
 # ASP.NET
 
 # Blazor
+
+# HTML
+
+# JavaScript
+
+
