@@ -9,6 +9,12 @@ some kind of user input, move data, etc. this must transformed into some kind of
 This transformed data must then be moved to different endpoints. Usually one of the endpoints is some kind of a graphic on the
 screen. Another common endpoint is to a database, file/directory, or service. (Load)
 
+## Example Blazor Architecture
+![Blazor Architecture](https://github.com/makalkas/Portfolio_Development_Examples/blob/main/Images/Blazor%20Enterprise%20App%20Architechture.png)
+
+The above Application process architecture is then expanded into what you see in the Blazor Architecture example (directly above) to allow for
+efficient communication and processing. The different services allow the application to grow and change as the business does while reducing the
+amount of work needed to upgrade the application.
 
 # UI/UX
 
