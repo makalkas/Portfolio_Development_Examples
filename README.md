@@ -21,7 +21,8 @@ amount of work needed to upgrade the application.
 ![Example Basic UI](https://github.com/makalkas/Portfolio_Development_Examples/blob/main/Images/UI-LabelApplication.png)
 
 When building UI(s), getting user feed back is important. For this reason, I try to give the user a version that is devoid of any destractions until
-I am ready to add the elements that will help make everything as intuitive as possible.
+I am ready to add the elements that will help make everything as intuitive as possible. This means following the patterns and conventions of applications
+the user is familiar with. This is why showing the user the UI as early in development as possible is critical.
 
 # C#
 
