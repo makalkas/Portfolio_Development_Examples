@@ -18,6 +18,10 @@ amount of work needed to upgrade the application.
 
 # UI/UX
 
+![Example Basic UI](https://github.com/makalkas/Portfolio_Development_Examples/blob/main/Images/UI-LabelApplication.png)
+
+When building UI(s), getting user feed back is important. For this reason, I try to give the user a version that is devoid of any destractions until
+I am ready to add the elements that will help make everything as intuitive as possible.
 
 # C#
 
